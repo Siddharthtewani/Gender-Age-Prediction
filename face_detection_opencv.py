@@ -9,12 +9,13 @@ import cvlib as cv
 from tensorflow.keras.preprocessing.image import img_to_array
 print("Done")
 #%%
-model=load_model(r'C:\Users\siddh\Desktop\Projects\GenderClassification\gender_detection.model')
+model=load_model(r'C:\Users\siddh\Desktop\Projects\Gender&AgeClassification\all_python_files\gender_detection.model')
+model_age=load_model(r"C:\Users\siddh\Desktop\Projects\Gender&AgeClassification\all_python_files\age_detection_latestmodel1.model")
 print("Done")
 # %%
 
 webcam=cv2.VideoCapture(0)
-classes=["woman","man"]
+classes=["man","woman"]
 
 while webcam.isOpened():
     status,frame=webcam.read()
@@ -34,18 +35,20 @@ while webcam.isOpened():
         pred_input=np.expand_dims(pred_input,axis=0)
 
         conf = model.predict(pred_input)[0] # model.predict return a 2D matrix, ex: [[9.9993384e-01 7.4850512e-05]]
-
+        age=model_age.predict(pred_input)[0]
         # get label with max accuracy
         idx = np.argmax(conf)
         label = classes[idx]
-
+        label2=str(age[0])
         label = "{}: {:.2f}%".format(label, conf[idx] * 100)
-        print(label)
+        
         Y = start_y - 10 if start_y - 10 > 10 else start_y + 10
 
        
         
         cv2.putText(frame, label, (start_x+10,start_y-10),  cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7, (0,0, 0), 2)
+        cv2.putText(frame, label2, (start_x+10,start_y+150),  cv2.FONT_HERSHEY_SIMPLEX,
                     0.7, (0,0, 0), 2)
         cv2.imshow("Video",frame)
     

@@ -127,9 +127,37 @@ model.fit(x_train, train_y, batch_size=64,
                         validation_data=(x_test,test_y),
                         epochs=50, verbose=1)
 # %%
-model.save('gender_detection.model')
+model.save('gender_detection_new.model')
 # %%
 model.evaluate(x_test,test_y)
 # %%
 keras.backend.clear_session()
 # %%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
